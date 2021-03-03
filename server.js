@@ -8,9 +8,12 @@ const shortid = require("shortid");
 const app = express();
 app.use(bodyParser.json());
 
+app.use("/", express.static(__dirname + "/build"));
+app.get("/", (req, res) => res.sendFile(__dirname + "/build/index.html"))
+
 // Initiailize Mongoose DB
 mongoose.connect(
-	'mongodb://localhost/mitten-msp-db',
+	process.env.MONGODB_URL || 'mongodb://localhost/mitten-msp-db',
 	{
 	  useNewUrlParser: true,
 	  useUnifiedTopology: true,
